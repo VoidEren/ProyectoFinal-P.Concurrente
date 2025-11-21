@@ -1,0 +1,17 @@
+{
+    "testuser": {
+        "email": "test@example.com",
+        "matricula": "0001",
+        "password": "12345"
+    },
+    "angel": {
+        "email": "angel@example.com",
+        "matricula": "2331123262",
+        "password": "123456"
+    },
+    "uriel": {
+        "email": "uriel@example.com",
+        "matricula": "2331123262",
+        "password": "123456"
+    }
+}

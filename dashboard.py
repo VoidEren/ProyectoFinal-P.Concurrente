@@ -13,61 +13,33 @@ def ruta_recurso(nombre_archivo):
 
 
 class DashboardApp:
-    def __init__(self, root, username, email):
+    """Reemplazo del dashboard por el menú principal.
+
+    Esta clase actúa como adaptador: al iniciarse abre la ventana
+    de `menu_principal.MenuPrincipal` en lugar de la UI anterior.
+    """
+    def __init__(self, root, username, email=None):
         self.root = root
         self.username = username
         self.email = email
-        
-        self.root.title("Dashboard Principal")
-        self.root.geometry("800x600")
-        self.root.resizable(False, False)
 
-        # Fondo para dashboard
-        imagen_dashboard = ruta_recurso("kareli.jpeg")
-        bg_image = Image.open(imagen_dashboard)
-        bg_image = bg_image.resize((800, 600))
-        self.bg_photo = ImageTk.PhotoImage(bg_image)
-
-        bg_label = tk.Label(self.root, image=self.bg_photo)
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-
-        # Título de bienvenida
-        tk.Label(self.root, text=f"Bienvenido al Menú Principal, {username}",
-                 font=("Arial", 18, "bold"), bg="SystemButtonFace").pack(pady=30)
-
-        # Frame para los botones de parciales
-        buttons_frame = tk.Frame(self.root, bg="SystemButtonFace")
-        buttons_frame.pack(pady=20)
-
-        tk.Button(buttons_frame, text="Parcial 1", bg="#4CAF50", fg="white",
-                  font=("Arial", 12, "bold"), width=15, height=2,
-                  command=lambda: self.open_partial(1)).pack(pady=10)
-
-        tk.Button(buttons_frame, text="Parcial 2", bg="#2196F3", fg="white",
-                  font=("Arial", 12, "bold"), width=15, height=2,
-                  command=lambda: self.open_partial(2)).pack(pady=10)
-
-        tk.Button(buttons_frame, text="Parcial 3", bg="#FF9800", fg="white",
-                  font=("Arial", 12, "bold"), width=15, height=2,
-                  command=lambda: self.open_partial(3)).pack(pady=10)
-
-        tk.Button(self.root, text="Cerrar Sesión", bg="#FF0000", fg="white", font=("Arial", 12),
-                  command=self.root.destroy).pack(pady=30)
-
-    def open_partial(self, partial_num):
-        """Abre la ventana del parcial específico."""
+        # Inicializar y delegar en menu_principal
         try:
-            if partial_num == 1:
-                import parcial1
-                parcial1.main()
-            elif partial_num == 2:
-                import parcial2
-                parcial2.main()
-            elif partial_num == 3:
-                import parcial3
-                parcial3.main()
+            from menu_principal import MenuPrincipal
         except Exception as e:
-            messagebox.showerror("Error", f"No se pudo abrir el parcial: {e}")
+            messagebox.showerror("Error", f"No se pudo importar menu_principal: {e}")
+            return
+
+        # Destruir la root actual y crear una nueva ventana para el menú
+        # para evitar conflictos con imágenes o referencias previas
+        try:
+            self.root.destroy()
+        except Exception:
+            pass
+
+        new_root = tk.Tk()
+        app = MenuPrincipal(new_root, username)
+        new_root.mainloop()
 
 
 if __name__ == "__main__":

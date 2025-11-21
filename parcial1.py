@@ -48,8 +48,21 @@ def main():
 
     tk.Label(frame, text="Parcial 1", font=("Arial", 24, "bold"), bg="gray30", fg="white").pack(pady=10)
 
-    tk.Label(frame, text="Aquí van los archivos y contenido del Parcial 1",
-             font=("Arial", 14), bg="gray30", fg="white").pack(pady=10)
+    # Frame para los 3 botones
+    buttons_frame = tk.Frame(frame, bg="gray30")
+    buttons_frame.pack(pady=20)
+
+    tk.Button(buttons_frame, text="Tareas", bg="#4CAF50", fg="white",
+              font=("Arial", 12, "bold"), width=15, height=2,
+              command=lambda: messagebox.showinfo("Tareas", "Aquí irán las tareas del Parcial 1")).pack(pady=10)
+
+    tk.Button(buttons_frame, text="Apuntes", bg="#2196F3", fg="white",
+              font=("Arial", 12, "bold"), width=15, height=2,
+              command=lambda: messagebox.showinfo("Apuntes", "Aquí irán los apuntes del Parcial 1")).pack(pady=10)
+
+    tk.Button(buttons_frame, text="Examen", bg="#FF9800", fg="white",
+              font=("Arial", 12, "bold"), width=15, height=2,
+              command=lambda: messagebox.showinfo("Examen", "Aquí irá el examen del Parcial 1")).pack(pady=10)
 
     tk.Button(
         frame, text="Cerrar", bg="#FF0000", fg="white",
